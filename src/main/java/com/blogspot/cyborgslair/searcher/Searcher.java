@@ -2,9 +2,13 @@ package com.blogspot.cyborgslair.searcher;
 
 import java.util.*;
 
-public class Searcher {
+// todo make more generic - ordered collection is enough, list of generic contained object also
+public class Searcher {//<E implements List<F extends Object>> {
     private final ArrayList<List<Object>> list = new ArrayList<>();
+    // todo replace by more efficient collections
     private final Map<Integer, Map<Object, Set<Integer>>> valuesCache = new HashMap<>();
+
+// todo clear method
 
     public void add(List<Object> row) {
         int index = list.size();
@@ -28,7 +32,10 @@ public class Searcher {
                         resultIndexes = new HashSet<>(valsForPosition.get(queryList.get(i)));
                     }
                 } else {
-                    resultIndexes.retainAll(valsForPosition.get(queryList.get(i)));
+                    Set<Integer> temSet = valsForPosition.get(queryList.get(i));
+                    if (temSet != null) {
+                        resultIndexes.retainAll(temSet);
+                    }
                 }
             }
         }
